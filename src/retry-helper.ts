@@ -1,4 +1,5 @@
 import * as core from '@actions/core'
+import * as crypto from 'crypto'
 
 const defaultMaxAttempts = 3
 const defaultMinSeconds = 10
@@ -44,10 +45,7 @@ export class RetryHelper {
   }
 
   private getSleepAmount(): number {
-    return (
-      Math.floor(Math.random() * (this.maxSeconds - this.minSeconds + 1)) +
-      this.minSeconds
-    )
+    return crypto.randomInt(this.minSeconds, this.maxSeconds + 1)
   }
 
   private async sleep(seconds: number): Promise<void> {
